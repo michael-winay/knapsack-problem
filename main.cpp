@@ -1,8 +1,9 @@
 #include <iostream>
-#include <time.h>
-#include <stdlib.h>
+#include <random>
 
 using namespace std;
+random_device rd;
+mt19937 rng(rd());
 
 //function to properly cout the return from knapsack
 void prepareSubset(int arr[4][2], int best[4], int value, int weight) {
@@ -74,17 +75,21 @@ int* knapsack(int arr[4][2], int cap) {
 
 int main() {
 
-	//Array for knapsack problem, [weight, value], weight cannot be zero
 	srand(time(NULL));
+	uniform_int_distribution<int> weight(1, 10);
+	uniform_int_distribution<int> value(1, 5);
+	uniform_int_distribution<int> capacity(8, 13);
 
+	//randomly generating problem values
 	int myArray[4][2] = {
-		{(rand() % 10) + 1, rand() % 10},
-		{(rand() % 10) + 1, rand() % 10},
-		{(rand() % 10) + 1, rand() % 10},
-		{(rand() % 10) + 1, rand() % 10}
+		{weight(rng), value(rng)},
+		{weight(rng), value(rng)},
+		{weight(rng), value(rng)},
+		{weight(rng), value(rng)}
 	};
+	int cap = capacity(rng);
 
-	cout << "Knapack capacity is 8\n";
+	cout << "Knapack capacity is" << " " << cap << endl;
 	cout << "Possible contents to put in knapsack:\n";
 	cout << "WEIGHT/VALUE\n";
 	cout << "[" << myArray[0][0] << ", " << myArray[0][1] << "]" << endl;
@@ -94,5 +99,5 @@ int main() {
 	cout << "\n\n";
 
 	//set capacity to eight for best results, theoretically could be any number
-	knapsack(myArray, 8);
+	knapsack(myArray, cap);
 }
