@@ -10,7 +10,7 @@ void prepareSubset(int arr[4][2], int best[4], int value, int weight) {
 	int i = 0;
 
 	cout << "Best subset:\n";
-	while (best[i] < 5) {
+	while (best[i] < 4 && i < 4) {
 		cout << "[" << arr[best[i]][0] << ", " << arr[best[i]][1] << "]" << endl;
 		i++;
 	}
@@ -30,7 +30,7 @@ int* knapsack(int arr[4][2], int cap) {
 	int size = 0;
 
 	//array to store the best possible subset
-	int best[4] = { 5,5,5,5 };
+	int best[4] = { 4,4,4,4 };
 
 	for (int i = 1; i < 16; i++) {
 		cout << "Subset" << " " << i << endl;
@@ -80,7 +80,6 @@ int* knapsack(int arr[4][2], int cap) {
 
 int main() {
 
-	srand(time(NULL));
 	uniform_int_distribution<int> weight(1, 10);
 	uniform_int_distribution<int> value(1, 5);
 	uniform_int_distribution<int> capacity(8, 13);
@@ -103,6 +102,5 @@ int main() {
 	cout << "[" << myArray[3][0] << ", " << myArray[3][1] << "]" << endl;
 	cout << endl;
 
-	//set capacity to eight for best results, theoretically could be any number
 	knapsack(myArray, cap);
 }
