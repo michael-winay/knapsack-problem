@@ -25,7 +25,7 @@ int* knapsack(int arr[4][2], int cap) {
 	int totalValue = 0;
 	int totalWeight = 0;
 
-	bool valid = false;
+	int subsetWeight = 0;
 	//size will have a max of 4
 	int size = 0;
 
@@ -42,21 +42,21 @@ int* knapsack(int arr[4][2], int cap) {
 
 			if ((i & (1 << j)) != 0) {
 				cout << "[" << arr[j][0] << ", " << arr[j][1] << "]\n";
+				subsetWeight += arr[j][0];
 				//check to see if adding subset value to array will put it over the capacity
 				int test = totalWeight + arr[j][0];
 				if (test > cap) {
-					valid = false;
 					continue;
 				}
 				if (test <= cap) {
-					valid = true;
 					totalWeight += arr[j][0];
 					temp[size] = j;
 					size++;
 				}
 			}
 		}
-		cout << "Subset" << " " << i << " " << "is" << " " << (valid ? "valid" : "invalid") << "\n\n";
+
+		cout << "Subset" << " " << i << " " << "is" << " " << (subsetWeight <= cap ? "valid" : "invalid") << "\n\n";
 		//summing value of current subset
 		for (int i = 0; i < size; i++) {
 			totalValue += arr[temp[i]][1];
@@ -70,6 +70,7 @@ int* knapsack(int arr[4][2], int cap) {
 			}
 		}
 		//resetting values for next iteration
+		subsetWeight = 0;
 		size = 0;
 		totalWeight = 0;
 		totalValue = 0;
